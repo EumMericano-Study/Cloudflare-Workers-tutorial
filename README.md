@@ -1,5 +1,7 @@
 ## Cloudflare Workers 무작정 따라하기
 
+<br />
+
 ```
 이 글은 서비스를 개발하는데 공식문서를 따라서 구현해보며 공부한 내용들을 정리할 계획입니다.
 ```
@@ -34,9 +36,12 @@ AWS와 Cloudflare 사이에서 고민하다 Cloudflare를 선택하게 되었다
 https://developers.cloudflare.com/workers/
 <br />
 <br />
+<br />  
 <br />
 
 ## Get Started guide
+
+<br />
 
 Cloudflare Workers는 서버리스 응용프로그램 플랫폼이다.  
 전 세계 200개가 넘는 도시에 클라우드 네트워크를 구축했고,  
@@ -48,9 +53,12 @@ Cloudflare Workers는 서버리스 응용프로그램 플랫폼이다.
 이 가이드는 Cloudflare 계정 설정부터 첫 Workers 스크립트 배포까지 진행한다.
 <br />
 <br />
+<br />  
 <br />
 
-## 1. Workers에 회원가입
+### 1. Workers에 회원가입
+
+<br />
 
 배포를 시작하기 전에, [회원가입][sign up]부터 해야한다.  
 Workers는 당신 소유의 도메인이나 workers.dev로 끝나는 무료 도메인을 얻을 수 있다.  
@@ -59,14 +67,18 @@ Workers는 당신 소유의 도메인이나 workers.dev로 끝나는 무료 도�
 <br />
 <br />
 <br />
+<br />
 
-## 2. Workers CLI 설치
+### 2. Workers CLI 설치
+
+<br />
 
 다음으로 Workers전용 CLI인 `wrangler`를 설치한다.  
 생성, 구성, 빌드, 프리뷰와 배포등을 간편하게 만들어준다.  
 `wrangler`를 설치하기 위해선 npm이 설치되어 있어야 하며  
 가급적이면 nvm이나 Volta를 이용해 노드버전 변경이나 권한 제어를 편하게 하면 좋다.
-<br />  
+<br />
+
 npm
 
 ```sh
@@ -90,6 +102,63 @@ wrangler --version
 <br />
 <br />
 <br />
+<br />
+
+### 3. Workers CLI 설정
+
+<br />
+
+설치가 끝나면 `wrangler`를 통해 Workers의 리소스를 사용할 수 있도록 OAuth를 설정해 주어야 한다.
+
+아래의 커맨드를 입력하면 자동으로 그 과정이 실행된다
+
+```sh
+wrangler login
+```
+
+<br />
+
+※ 로그인 완료 후 화면
+
+<img src="https://eumericano.s3.ap-northeast-2.amazonaws.com/dev/wrangler+login.png" alt="계정 로그인" style="width:50vw; min-width:500px;"/>
+
+<br />
+<br />   
+<br />   
+<br />
+
+### 4. 새 프로젝트 만들기
+
+<br />
+
+Wrangler의 `generate` 명령어는 새로운 프로젝트를 만들어 준다.  
+기본 설정으로 `default starter` 템플릿이 적용되어 생성된다.  
+만약 커스텀 템플릿을 사용하고 싶다면, 생성한 템플릿의 URL을 추가로 입력하면 된다.
+
+예시로, `first-worker`라는 이름의 기본 템플릿 Worker를 생성하려면 아래의 명령어를 입력하면 된다.
+
+```sh
+wrangler generate first-worker
+```
+
+Wrangler는 `first-worker`라는 디렉토리를 새로 생성하고, starter 템플릿을 연결해준다. 위 경우에는 기본 템플릿을 제공한다.  
+Wrangler는 자동적으로 이름이 `first-worker`로 명명된 `wrangler.toml`파일을 생성한다.
+
+※ wrangler.toml
+
+<img src="https://eumericano.s3.ap-northeast-2.amazonaws.com/dev/wrangler.toml.png" alt="wrangler.toml" style="width:50vw; min-width:500px;"/>
+
+[빠른 시작][starter templates] 페이지 에서 다른 스타터 템플릿들을 확인 할 수 있다.
+
+예를들어, 타입 스크립트로 워커를 시작하고 싶다면 아래 명령어를 작성하면 된다.
+
+```sh
+wrangler generate first-worker https://github.com/cloudflare/worker-typescript-template
+```
+
+또한, 커스텀 템플릿을 만들고 싶다면 [wrangler init][wrangler init] 을 사용하면 된다.
+
+---
 
 [references]
 
@@ -99,6 +168,8 @@ wrangler --version
 
 [playground]: https://cloudflareworkers.com/
 [sign up]: https://dash.cloudflare.com/sign-up/workers
+[starter templates]: https://developers.cloudflare.com/workers/get-started/quickstarts/
+[wrangler init]: https://developers.cloudflare.com/workers/cli-wrangler/commands/#init
 [1]: https://blog.upstash.com/aws-lambda-vs-cloudflare-workers
 [2]: https://isotropic.co/cloudflare-workers-vs-aws-lambda/
 [3]: https://news.ycombinator.com/item?id=17445134
