@@ -27,12 +27,14 @@ AWS와 Cloudflare 사이에서 고민하다 Cloudflare를 선택하게 되었다
 ```
 
 이외에도 인터넷을 쳐보면 둘을 비교한 글이 많다.  
-모든 개발환경이 그렇듯 [자신의 환경][1]에 맞게 설정하면 된다.
-<br />  
+모든 개발환경이 그렇듯 [자신의 환경][1]에 맞게 설정하면 된다.  
 <br />
 
 서론을 마치고 Cloudflare의 기능들을 무작정 따라해보자  
 https://developers.cloudflare.com/workers/
+<br />
+<br />
+<br />
 
 ## Get Started guide
 
@@ -44,16 +46,59 @@ Cloudflare Workers는 서버리스 응용프로그램 플랫폼이다.
 > 이 환경에서 따라해보면 좀 더 직접적으로 공부가 될 것 같다.
 
 이 가이드는 Cloudflare 계정 설정부터 첫 Workers 스크립트 배포까지 진행한다.
+<br />
+<br />
+<br />
 
----
+## 1. Workers에 회원가입
+
+배포를 시작하기 전에, [회원가입][sign up]부터 해야한다.  
+Workers는 당신 소유의 도메인이나 workers.dev로 끝나는 무료 도메인을 얻을 수 있다.  
+회원가입 과정은 \*.workers.dev 서브 도메인과 이메일 인증으로 진행된다.  
+이 과정은 서비스 시험 과정이므로 무료 플랜을 선택하였다.
+<br />
+<br />
+<br />
+
+## 2. Workers CLI 설치
+
+다음으로 Workers전용 CLI인 `wrangler`를 설치한다.  
+생성, 구성, 빌드, 프리뷰와 배포등을 간편하게 만들어준다.  
+`wrangler`를 설치하기 위해선 npm이 설치되어 있어야 하며  
+가급적이면 nvm이나 Volta를 이용해 노드버전 변경이나 권한 제어를 편하게 하면 좋다.
+<br />  
+npm
+
+```sh
+npm install -g @cloudflare/wrangler
+```
+
+yarn
+
+```sh
+yarn global add @cloudflare/wrangler
+```
+
+그 다음 설치가 잘 되었는지 `wrangler --version` 명령어로 확인해본다
+
+```sh
+wrangler --version
+```
+
+<img src="https://eumericano.s3.ap-northeast-2.amazonaws.com/dev/wrangler-version.png" alt="버전확인" style="width:50vw; min-width:400px;"/>
+
+<br />
+<br />
+<br />
 
 [references]
 
 1. [https://blog.upstash.com/aws-lambda-vs-cloudflare-workers][1]
 2. [https://isotropic.co/cloudflare-workers-vs-aws-lambda/][2]
-3. [https://news.ycombinator.com/item?id=17445134][3]
+3. [https://news.ycombinator.com/item?id=17445134₩][3]
 
 [playground]: https://cloudflareworkers.com/
+[sign up]: https://dash.cloudflare.com/sign-up/workers
 [1]: https://blog.upstash.com/aws-lambda-vs-cloudflare-workers
 [2]: https://isotropic.co/cloudflare-workers-vs-aws-lambda/
 [3]: https://news.ycombinator.com/item?id=17445134
