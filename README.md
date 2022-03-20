@@ -170,6 +170,7 @@ wrangler generate first-worker https://github.com/cloudflare/worker-typescript-t
 
 당신이 프로젝트를 생성했다면, 이제는 코드를 작성할 수 있다.
 
+<br />   
 <br />
 
 #### 5-1. Hello World 이해하기
@@ -201,11 +202,24 @@ async function handleRequest(request) {
 
 1. `FetchEvent`에 대한 이벤트 리스너는 당신의 Worker로 들어온 모든 요청을 스크립트에게 수신하라고 지시한다. 이벤트 핸들러는 `event.request`가 포함된 `event`객체를 넘겨주고, `Request` 객체는 `FetchEvent`를 트리거한 HTTP 요청을 나타낸다.
 2. `.respondWith()`를 통해, Worker에서 Response를 반환하는 것을 커스텀된 Response로 런타임 인터셉트해서 반환할 수 있다. (예제의 경우 텍스트 "Hello worker!"를 반환하도록 작성함)
+   - 일반적으로 FetchEvent 핸들러는 `.respondWith()`나 `Promise<Response>`로 끝난다.
+   - `FetchEvent` 객체는 다른 2가지 메서드인 예외처리 매서드와 Response를 리턴 후 작업을 처리해주는 매서드를 가지고 있다.
 
-<br />   
-<br />   
-<br />   
+자세한 사항은 Fetch Event 디테일 페이지에서 확인하면 된다.
+<br />  
 <br />
+
+#### 5-2. request 필터링 및 라우팅
+
+<br />
+
+모든 리퀘스트들에 대한 간단한 스크립트를 작성한 후, 해야할 다음 과정은 Worker 스크립트가 받는 request들을 기반으로 동적 response를 만드는 것 입니다.
+
+<br />  
+<br />  
+<br />  
+<br />
+
 ---
 
 [references]
