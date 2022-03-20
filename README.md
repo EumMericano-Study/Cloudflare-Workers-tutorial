@@ -18,28 +18,31 @@ AWS와 Cloudflare 사이에서 고민하다 Cloudflare를 선택하게 되었다
 
 <br />
 
-```
 1. 저렴한 비용
    - AWS에서 지원하는 람다, cloudfront, dynamoDB, S3들에 비해
      Cloudflare에서 제공하는 Workers, Pages, KV, R2등이 기본 제공량도 많고 상대적으로 더 저렴하다.
    - 웹 페이지를 CDN으로 띄우는데 무료이다.
 2. 더 나은 성능
-   - 직접 테스트를 해보지 않았지만 AWS lambda, lambda@edge보다 [벤치마크][3]에서 앞섰다는 글을 보았다.
+   - AWS lambda, lambda@edge와 [비교한 글][3]을 봄.
 3. GraphQL을 사용해도 CDN을 지원한다.
-```
 
 이외에도 인터넷을 쳐보면 둘을 비교한 글이 많다.  
 모든 개발환경이 그렇듯 [자신의 환경][1]에 맞게 설정하면 된다.  
-<br />
-
-서론을 마치고 Cloudflare의 기능들을 무작정 따라해보자  
-https://developers.cloudflare.com/workers/
 <br />
 <br />
 <br />  
 <br />
 
 ## Get Started guide
+
+<br />
+
+서론을 마치고 Cloudflare의 기능들을 무작정 따라해보자  
+https://developers.cloudflare.com/workers/
+
+```
+※ 오역이 포함되어 있을 수 있습니다. 제가 공부하며 이해한 내용들을 작성했습니다.
+```
 
 <br />
 
@@ -158,6 +161,51 @@ wrangler generate first-worker https://github.com/cloudflare/worker-typescript-t
 
 또한, 커스텀 템플릿을 만들고 싶다면 [wrangler init][wrangler init] 을 사용하면 된다.
 
+<br />
+<br />  
+<br />  
+<br />
+
+### 5. 코드 작성
+
+당신이 프로젝트를 생성했다면, 이제는 코드를 작성할 수 있다.
+
+<br />
+
+#### 5-1. Hello World 이해하기
+
+근본적으로 Worker는 2가지 구성요소로 이루어져 있다.
+<br />
+
+1. [FetchEvent][fetch event]들을 확인하기 위한 [Event Listner][event listner]들과
+2. `.respondWith()` 매서드에 매개변수로 들어갈 Response객체를 반환하는 함수입니다.
+
+<br />
+
+**first-worker/index.js**
+
+```javascript
+addEventListener("fetch", (event) => {
+  event.respondWith(handleRequest(event.request));
+});
+
+async function handleRequest(request) {
+  return new Response("Hello worker!", {
+    headers: { "content-type": "text/plain" },
+  });
+}
+```
+
+<br />
+아래는 요청에 대한 응답 작업의 흐름을 보여주는 예시이다
+
+1. `FetchEvent`에 대한 이벤트 리스너는 당신의 Worker로 들어온 모든 요청을 스크립트에게 수신하라고 지시한다. 이벤트 핸들러는 `event.request`가 포함된 `event`객체를 넘겨주고, `Request` 객체는 `FetchEvent`를 트리거한 HTTP 요청을 나타낸다.
+2. `.respondWith()`를 통해, Worker에서 Response를 반환하는 것을 커스텀된 Response로 런타임 인터셉트해서 반환할 수 있다. (예제의 경우 텍스트 "Hello worker!"를 반환하도록 작성함)
+
+<br />   
+<br />   
+<br />   
+<br />
 ---
 
 [references]
@@ -170,6 +218,8 @@ wrangler generate first-worker https://github.com/cloudflare/worker-typescript-t
 [sign up]: https://dash.cloudflare.com/sign-up/workers
 [starter templates]: https://developers.cloudflare.com/workers/get-started/quickstarts/
 [wrangler init]: https://developers.cloudflare.com/workers/cli-wrangler/commands/#init
+[fetch event]: https://developers.cloudflare.com/workers/runtime-apis/fetch-event/
+[event listner]: https://developers.cloudflare.com/workers/runtime-apis/add-event-listener/
 [1]: https://blog.upstash.com/aws-lambda-vs-cloudflare-workers
 [2]: https://isotropic.co/cloudflare-workers-vs-aws-lambda/
 [3]: https://news.ycombinator.com/item?id=17445134
